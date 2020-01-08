@@ -125,7 +125,7 @@ def train_wavenet_pitch(strategy,LOGDIR,model_path,data_path,cache1,cache2):
     dataset = strategy.experimental_distribute_dataset(dataset)
     print("starting!!")
     
-    def to_audio(x):
+    def to_audio_from_mu_law(x):
         def inv_mu_law(x, mu=255):
           """A TF implementation of inverse Mu-Law.
 
@@ -177,9 +177,9 @@ def train_wavenet_pitch(strategy,LOGDIR,model_path,data_path,cache1,cache2):
                 mix_audio = strategy.experimental_local_results(X_mix)[0][0:10]
                 clean_audio = strategy.experimental_local_results(X_clean)[0][0:10]
                 out_audio = res[-1][0:10]
-                mix_audio = to_audio(mix_audio)
-                clean_audio = to_audio(clean_audio)
-                out_audio = to_audio(out_audio)
+                #mix_audio = to_audio(mix_audio)
+                #clean_audio = to_audio(clean_audio)
+                #out_audio = to_audio(out_audio)
                 tf.summary.audio("mix_audio",mix_audio,16000,step=step,max_outputs=10)
                 tf.summary.audio("clean_audio",clean_audio,16000,step=step,max_outputs=10)
                 tf.summary.audio("out_audio",out_audio,16000,step=step,max_outputs=10)

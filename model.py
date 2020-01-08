@@ -43,7 +43,7 @@ def create_decoder(initial_filter = 32):
   out = BatchNormalization()(out)
   out = Reshape((8192,1),name="out_reshape")(out)
   #out = Activation("softmax",name="out")(out)
-  out = Conv1D(1,7,padding="same",activation="relu")(out)
+  out = Conv1D(1,7,padding="same",activation="tanh")(out)
 
   
   return Model(inputs=[inputs,pitch,instruments],outputs=out,name="decoder")
