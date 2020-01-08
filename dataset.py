@@ -1,4 +1,6 @@
-def load_nsynth(path):
+import tensorflow as tf
+
+def load_nsynth(path,cache1,cache2):
     AUTOTUNE = tf.data.experimental.AUTOTUNE
     dataset = tf.data.TFRecordDataset(path)
     length = 64000
@@ -110,8 +112,8 @@ def load_nsynth(path):
 
     #dataset = dataset.filter(lambda w,l,i:tf.reduce_all(tf.equal(1,i)))
     dataset = dataset.filter(lambda a,l,f,i,q:tf.equal(q[7],0)).map(drop_quality)
-    dataset1 = dataset.filter(lambda a,l,f,i,: tf.equal(f,0)[0]).cache("gs://hyper-tfrc_research/dataset/waveunet+pitch/nsynth-train-bass.cache").map(to_categorical)
-    dataset2 = dataset.filter(lambda a,l,f,i,: tf.equal(f,6)[0]).cache("gs://hyper-tfrc_research/dataset/waveunet+pitch/nsynth-train-organ.cache").map(to_categorical)
+    dataset1 = dataset.filter(lambda a,l,f,i,: tf.equal(f,0)[0]).cache(cache1).map(to_categorical)
+    dataset2 = dataset.filter(lambda a,l,f,i,: tf.equal(f,6)[0]).cache(cache2).map(to_categorical)
     dataset1 = dataset1.shuffle(1000,reshuffle_each_iteration=True).repeat()
     dataset2 = dataset2.shuffle(1000,reshuffle_each_iteration=True).repeat()
     dataset1 = dataset1.map(random_crop).prefetch(AUTOTUNE)
@@ -121,7 +123,7 @@ def load_nsynth(path):
     mixed_dataset = bs_dataset.map(mix)
     mixed_dataset = mixed_dataset.map(preprocess)
 
-    #dataset = dataset.filter(lambda a,l,f,i:tf.math.logical_or(tf.equal(f,1)[0],tf.equal(f,8)[0])).cache("gs://hyper-ultimate-jsim-colab/dataset/nsynth-train-brass-string.cache")
+   
     #dataset = dataset.map(preprocess)
     
     
