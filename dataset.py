@@ -1,4 +1,7 @@
 import tensorflow as tf
+import config
+print(config)
+
 
 def load_nsynth(path,cache1,cache2):
     AUTOTUNE = tf.data.experimental.AUTOTUNE
@@ -93,15 +96,24 @@ def load_nsynth(path,cache1,cache2):
         w = mu_law(w)
         w = tf.one_hot(tf.cast(w,"int32"),256)
         return w,l,f,i
+
+    def normlize(x):
+      x = x / (tf.reduce_max(x,axis=-1,keepdims=True))
+      x = x / (1+1e-5)
+      
         
     def preprocess(m,b,s):
         #m_enc = tf.one_hot(tf.cast(mu_law(m),"int32"),256)
         #b_enc = tf.one_hot(tf.cast(mu_law(b[0]),"int32"),256)
         #s_enc = tf.one_hot(tf.cast(mu_law(s[0]),"int32"),256)
         
-        m_enc = tf.expand_dims(tf.cast(mu_law(m),"float32"),axis=1)
-        b_enc = tf.expand_dims(tf.cast(mu_law(b[0]),"float32"),axis=1)
-        s_enc = tf.expand_dims(tf.cast(mu_law(s[0]),"float32"),axis=1)
+        #m_enc = tf.expand_dims(tf.cast(mu_law(m),"float32"),axis=1)
+        #b_enc = tf.expand_dims(tf.cast(mu_law(b[0]),"float32"),axis=1)
+        #s_enc = tf.expand_dims(tf.cast(mu_law(s[0]),"float32"),axis=1)
+
+        m_enc = tf.expand_dims(m,axis=1)
+        b_enc = tf.expand_dims(b[0],axis=1)
+        s_enc = tf.expand_dims(s[0],axis=1)
 
         return m_enc,(b_enc,)+b[1:],(s_enc,)+s[1:]
 
