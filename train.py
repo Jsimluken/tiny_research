@@ -4,7 +4,7 @@ from .dataset import *
 import tqdm
 
 
-def train_wavenet_pitch(strategy,LOGDIR,model_path,cache1,cache2):
+def train_wavenet_pitch(strategy,LOGDIR,model_path,data_path,cache1,cache2):
   now = datetime.datetime.now(tz=datetime.timezone(datetime.timedelta(hours=9)))
   str_time = now.strftime("%Y_%m_%d_%H_%M_%S")
   LOGDIR= f"{LOGDIR}_{str_time}"
@@ -118,7 +118,7 @@ def train_wavenet_pitch(strategy,LOGDIR,model_path,cache1,cache2):
 
       return mix_audio,pitch,family,audio
     batch_size = 512
-    dataset = load_nsynth()
+    dataset = load_nsynth(data_path,cache1,cache2)
     #dataset = dataset.batch(batch_size)
     dataset = dataset.shuffle(1000, reshuffle_each_iteration=True)
     dataset = dataset.batch(batch_size).prefetch(tf.data.experimental.AUTOTUNE)
