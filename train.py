@@ -1,7 +1,8 @@
 import tensorflow as tf
-from model import *
-from dataset import *
+from .model import *
+from .dataset import *
 import tqdm
+
 
 def train_wavenet_pitch(strategy,LOGDIR,model_path):
   now = datetime.datetime.now(tz=datetime.timezone(datetime.timedelta(hours=9)))
