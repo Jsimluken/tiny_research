@@ -2,6 +2,10 @@ config = {
     "hyper":0
 }
 
+train_config = {
+    "batch_size":512
+}
+
 model_config = {
     "num_layer":7,
     "initial_filter":32,

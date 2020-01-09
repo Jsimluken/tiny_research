@@ -25,12 +25,12 @@ def train_wavenet_pitch(strategy,LOGDIR,model_path,data_path,cache1,cache2):
     bin_loss = tf.losses.BinaryCrossentropy(reduction=tf.losses.Reduction.NONE)
 
     # Generator optimizers!!
-    gec_optim = tf.optimizers.Adam(learning_rate=0.0006)
-    gec_optim2 = tf.optimizers.Adam(learning_rate=0.0006)
+    gec_optim = tf.optimizers.Adam(learning_rate=0.00006)
+    gec_optim2 = tf.optimizers.Adam(learning_rate=0.00006)
 
-    gd_audio_optim1 = tf.optimizers.Adam(learning_rate=0.0004)
-    gd_audio_optim2 = tf.optimizers.Adam(learning_rate=0.0002)
-    gd_audio_optim3 = tf.optimizers.Adam(learning_rate=0.0006)
+    gd_audio_optim1 = tf.optimizers.Adam(learning_rate=0.00004)
+    gd_audio_optim2 = tf.optimizers.Adam(learning_rate=0.00002)
+    gd_audio_optim3 = tf.optimizers.Adam(learning_rate=0.00006)
 
 
     pitch_acc = tf.metrics.CategoricalAccuracy()
