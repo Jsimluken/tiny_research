@@ -24,40 +24,40 @@ import tqdm
     bin_loss = tf.losses.BinaryCrossentropy(reduction=tf.losses.Reduction.NONE)
 
     # Generator optimizers!!
-    gec_optim_e = tf.optimizers.Adam(learning_rate=0.0004)
-    gec_optim_c = tf.optimizers.Adam(learning_rate=0.0004)
+    gec_optim_e = tf.optimizers.Adam(learning_rate=0.00004)
+    gec_optim_c = tf.optimizers.Adam(learning_rate=0.00004)
 
-    gd_audio_optim_e = tf.optimizers.Adam(learning_rate=0.0005)
-    gd_audio_optim_c = tf.optimizers.Adam(learning_rate=0.0001)
-    gd_audio_optim_d = tf.optimizers.Adam(learning_rate=0.0005)
+    gd_audio_optim_e = tf.optimizers.Adam(learning_rate=0.00005)
+    gd_audio_optim_c = tf.optimizers.Adam(learning_rate=0.00001)
+    gd_audio_optim_d = tf.optimizers.Adam(learning_rate=0.00005)
 
-    gdc_optim1_e = tf.optimizers.Adam(learning_rate=0.0003)
-    gdc_optim1_c = tf.optimizers.Adam(learning_rate=0.0003)
-    gdc_optim1_d = tf.optimizers.Adam(learning_rate=0.0003)
+    gdc_optim1_e = tf.optimizers.Adam(learning_rate=0.00003)
+    gdc_optim1_c = tf.optimizers.Adam(learning_rate=0.00003)
+    gdc_optim1_d = tf.optimizers.Adam(learning_rate=0.00003)
     
     gdc_optim2_e = tf.optimizers.Adam()
     gdc_optim2_c = tf.optimizers.Adam()
     gdc_optim2_d = tf.optimizers.Adam()
     
-    gdc_optim3_e = tf.optimizers.Adam(learning_rate=0.0004)
-    gdc_optim3_c = tf.optimizers.Adam(learning_rate=0.0004)
-    gdc_optim3_d = tf.optimizers.Adam(learning_rate=0.0004)
+    gdc_optim3_e = tf.optimizers.Adam(learning_rate=0.00004)
+    gdc_optim3_c = tf.optimizers.Adam(learning_rate=0.00004)
+    gdc_optim3_d = tf.optimizers.Adam(learning_rate=0.00004)
 
     #Discrimonator optimizers!!
-    dr_optim1_e = tf.optimizers.Adam(learning_rate=0.0005)
-    dr_optim1_c = tf.optimizers.Adam(learning_rate=0.0005)
-    dr_optim1_d = tf.optimizers.Adam(learning_rate=0.0005)
+    dr_optim1_e = tf.optimizers.Adam(learning_rate=0.00005)
+    dr_optim1_c = tf.optimizers.Adam(learning_rate=0.00005)
+    dr_optim1_d = tf.optimizers.Adam(learning_rate=0.00005)
     
     dr_optim2_e = tf.optimizers.Adam()
     dr_optim2_c = tf.optimizers.Adam()
     dr_optim2_d = tf.optimizers.Adam()
     
-    dr_optim3_e = tf.optimizers.Adam(learning_rate=0.0001)
+    dr_optim3_e = tf.optimizers.Adam(learning_rate=0.00001)
     dr_optim3_c = tf.optimizers.Adam(learning_rate=0.0001)
 
-    df_optim1 = tf.optimizers.Adam(learning_rate=0.0004)
-    df_optim2 = tf.optimizers.Adam(learning_rate=0.0004)
-    df_optim3 = tf.optimizers.Adam(learning_rate=0.0004)
+    df_optim1 = tf.optimizers.Adam(learning_rate=0.00004)
+    df_optim2 = tf.optimizers.Adam(learning_rate=0.00004)
+    df_optim3 = tf.optimizers.Adam(learning_rate=0.00004)
 
     pitch_acc = tf.metrics.CategoricalAccuracy()
     dec_acc = tf.metrics.CategoricalAccuracy()
@@ -306,9 +306,9 @@ import tqdm
                 mix_audio = strategy.experimental_local_results(X_mix)[0][0:10]
                 clean_audio = strategy.experimental_local_results(X_clean)[0][0:10]
                 out_audio = res[-1][0:10]
-                mix_audio = to_audio(mix_audio)
-                clean_audio = to_audio(clean_audio)
-                out_audio = to_audio(out_audio)
+                #mix_audio = to_audio(mix_audio)
+                #clean_audio = to_audio(clean_audio)
+                #out_audio = to_audio(out_audio)
                 tf.summary.audio("mix_audio",mix_audio,16000,step=step,max_outputs=10)
                 tf.summary.audio("clean_audio",clean_audio,16000,step=step,max_outputs=10)
                 tf.summary.audio("out_audio",out_audio,16000,step=step,max_outputs=10)

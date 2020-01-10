@@ -29,7 +29,7 @@ def create_decoder(initial_filter = 32):
   base = 64
   enc = Reshape((1,64,initial_filter*7),name="renc0")(inputs[0])
   infos = Concatenate(axis=-1)([pitch,instruments])
-  infos = Dense(64,activation="elu")(infos)
+  infos = Dense(64,activation="relu")(infos)
   infos = Reshape((1,64,1))(infos)
   enc = Concatenate(axis=-1)([enc,infos])
   #dec = Conv2DTranspose(128,3,strides=(1,2))(enc)
