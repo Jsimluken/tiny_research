@@ -54,7 +54,7 @@ def train(strategy,LOGDIR,model_path,data_path,cache1,cache2):
     dr_optim2_d = tf.optimizers.Adam()
     
     dr_optim3_e = tf.optimizers.Adam(learning_rate=0.00001)
-    dr_optim3_c = tf.optimizers.Adam(learning_rate=0.0001)
+    dr_optim3_c = tf.optimizers.Adam(learning_rate=0.00001)
 
     df_optim1 = tf.optimizers.Adam(learning_rate=0.00004)
     df_optim2 = tf.optimizers.Adam(learning_rate=0.00004)
