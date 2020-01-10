@@ -1,6 +1,6 @@
 import os
 import tensorflow as tf
-from tensorflow.keras.layers import Conv1D, Input, BatchNormalization, Flatten, Dense,Conv2DTranspose,Reshape,Concatenate,Activation
+from tensorflow.keras.layers import Conv1D, Input, BatchNormalization, Flatten, Dense,Conv2DTranspose,Reshape,Concatenate,Activation, LeakyReLU
 from tensorflow.keras.models import Model
 from enum import Enum
 import tqdm
@@ -15,7 +15,8 @@ def create_encoder(initial_filter = 32):
     encs = []
     num = 7
     for i in range(num):
-        x = Conv1D(initial_filter*(i+1),15,strides=2,padding="same",activation="elu")(x)
+        x = Conv1D(initial_filter*(i+1),15,strides=2,padding="same",)(x)
+        x = LeakyReLU(alpha=0.2)(x)
         x = BatchNormalization()(x)
         encs.append(x)
     return Model(input_,encs,name="encoder")
@@ -52,27 +53,27 @@ def create_decoder(initial_filter = 32):
 def create_classifier(initial_filter = 32):
     input_ = Input((64,initial_filter*7),name="enc_input")
     instruments_input = Input((11,))
-    instruments_i = Dense(64,activation="elu")(instruments_input)
+    instruments_i = Dense(64,activation="relu")(instruments_input)
     instruments_i = Reshape((64,1))(instruments_i)
     
     #pitch = Conv1D(128,5,strides=2,activation="elu")(input_)
 
 
-    instruments = Conv1D(64,5,strides=2,activation="elu")(input_)
-    instruments = Conv1D(32,5,strides=2,activation="elu")(instruments)
+    instruments = Conv1D(64,5,strides=2,activation="relu")(input_)
+    instruments = Conv1D(32,5,strides=2,activation="relu")(instruments)
     instruments = Flatten()(instruments)
     instruments = Dense(11, activation="softmax")(instruments)
     
     x = Concatenate(axis=-1)([input_,instruments_i])
-    pitch = Conv1D(64,5,strides=2,activation="elu")(x)
+    pitch = Conv1D(64,5,strides=2,activation="relu")(x)
     pitch = BatchNormalization()(pitch)
-    pitch = Conv1D(32,5,strides=2,activation="elu")(pitch)
+    pitch = Conv1D(32,5,strides=2,activation="relu")(pitch)
     pitch = BatchNormalization()(pitch)
     pitch = Flatten()(pitch)
     pitch = Dense(128, activation="softmax")(pitch)
     
-    fake = Conv1D(64,5,strides=2,activation="elu")(x)
-    fake = Conv1D(32,5,strides=2,activation="elu")(fake)
+    fake = Conv1D(64,5,strides=2,activation="relu")(x)
+    fake = Conv1D(32,5,strides=2,activation="relu")(fake)
     fake = Flatten()(fake)
     fake = Dense(1,"sigmoid")(fake)
 

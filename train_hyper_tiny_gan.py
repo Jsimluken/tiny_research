@@ -1,8 +1,9 @@
-from model import *
-from dataset import *
+import tensorflow as tf
+from .model import *
+from .dataset import *
 import tqdm
 
-def train(strategy,LOGDIR,model_path):
+def train(strategy,LOGDIR,model_path,data_path,cache1,cache2):
   now = datetime.datetime.now(tz=datetime.timezone(datetime.timedelta(hours=9)))
   str_time = now.strftime("%Y_%m_%d_%H_%M_%S")
   LOGDIR= f"{LOGDIR}_{str_time}"
