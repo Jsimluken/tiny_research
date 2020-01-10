@@ -202,7 +202,7 @@ def train(strategy,LOGDIR,model_path,data_path,cache1,cache2):
       #discriminator fake!!
       print("dscriminator_fake!!")
       df_params = [classifier.trainable_weights]
-      for i in range(2):
+      for i in range(1):
           with tf.GradientTape() as df_tape1,tf.GradientTape() as df_tape2,tf.GradientTape() as df_tape3:
             dfp_pitch,dfp_family,dfp_fake = classifier([gd_enced[-1],family])
           print("df_pitch!!")
