@@ -36,11 +36,13 @@ def create_decoder(initial_filter = 32):
   #dec = Conv2DTranspose(128,3,strides=(1,2))(enc)
 
   for i in range(1,num):
-    dec = Conv2DTranspose(initial_filter*(num-i),7,strides=(1,2),padding="same",activation="relu")(enc)
+    dec = Conv2DTranspose(initial_filter*(num-i),7,strides=(1,2),padding="same")(enc)
+    dec = LeakyReLU(alpha=0.2)(dec)
     dec = BatchNormalization()(dec)
     enc = Reshape((1,64*2**i,initial_filter*(num-i)))(inputs[i])
     enc = Concatenate(axis=-1)([dec,enc])
-  out = Conv2DTranspose(1,7,strides=(1,2),padding="same",activation="relu")(enc)
+  out = Conv2DTranspose(1,7,strides=(1,2),padding="same")(enc)
+  out = LeakyReLU(alpha=0.2)(out)
   out = BatchNormalization()(out)
   out = Reshape((8192,1),name="out_reshape")(out)
   #out = Activation("softmax",name="out")(out)
