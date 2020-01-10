@@ -262,7 +262,7 @@ def train(strategy,LOGDIR,model_path,data_path,cache1,cache2):
         return tf.expand_dims(inv_mu_law(mu_law),axis=-1)
 
     batch_size = 512
-    dataset = load_nsynth()
+    dataset = load_nsynth(data_path,cache1,cache2)
     #dataset = dataset.batch(batch_size)
     dataset = dataset.shuffle(1000, reshuffle_each_iteration=True)
     dataset = dataset.batch(batch_size).prefetch(tf.data.experimental.AUTOTUNE)
