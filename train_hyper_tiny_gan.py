@@ -51,7 +51,7 @@ def train(strategy,LOGDIR,model_path,data_path,cache1,cache2):
     
     dr_optim2_e = tf.optimizers.Adam()
     dr_optim2_c = tf.optimizers.Adam()
-    dr_optim2_d = tf.optimizers.Adam()
+    #dr_optim2_d = tf.optimizers.Adam()
     
     dr_optim3_e = tf.optimizers.Adam(learning_rate=0.00001)
     dr_optim3_c = tf.optimizers.Adam(learning_rate=0.00001)
@@ -156,9 +156,9 @@ def train(strategy,LOGDIR,model_path,data_path,cache1,cache2):
       gdc_optim1_c.apply_gradients(zip(gdc_pitch_gradient[1],gdc_params[1]))
       gdc_optim1_d.apply_gradients(zip(gdc_pitch_gradient[2],gdc_params[2]))
 
-      #gdc_optim2_e.apply_gradients(zip(gdc_family_loss[0],gdc_params[0]))
-      #gdc_optim2_c.apply_gradients(zip(gdc_family_loss[1],gdc_params[1]))
-      #gdc_optim2_d.apply_gradients(zip(gdc_family_loss[2],gdc_params[2]))
+      #gdc_optim2_e.apply_gradients(zip(gdc_family_gradients[0],gdc_params[0]))
+      #gdc_optim2_c.apply_gradients(zip(gdc_family_gradients[1],gdc_params[1]))
+      #gdc_optim2_d.apply_gradients(zip(gdc_family_gradients[2],gdc_params[2]))
 
       gdc_optim3_e.apply_gradients(zip(gdc_fake_gradient[0],gdc_params[0]))
       gdc_optim3_c.apply_gradients(zip(gdc_fake_gradient[1],gdc_params[1]))
@@ -222,7 +222,7 @@ def train(strategy,LOGDIR,model_path,data_path,cache1,cache2):
           df_acc.update_state(gt_fake,dfp_fake)
 
           df_optim1.apply_gradients(zip(df_pitch_gradient[0],df_params[0]))
-          df_optim2.apply_gradients(zip(df_family_gradient[0],df_params[0]))
+          #df_optim2.apply_gradients(zip(df_family_gradient[0],df_params[0]))
           df_optim3.apply_gradients(zip(df_fake_gradient[0],df_params[0]))
           print("df end!!")
         

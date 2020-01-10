@@ -3,7 +3,8 @@ config = {
 }
 
 train_config = {
-    "batch_size":512
+    "batch_size":512,
+    "lr":0.00001
 }
 
 model_config = {
